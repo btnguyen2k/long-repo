@@ -1,0 +1,35 @@
+# touch: 0
+name: 'Create Dummy Releases'
+
+on:
+  push:
+    branches: [ 'main' ]
+    paths-includes:
+      - '.github/workflows/create_releases.yaml'
+  pull_request:
+    types: [ 'closed' ]
+    branches: [ 'main' ]
+    paths-includes:
+      - '.github/workflows/create_releases.yaml'
+
+jobs:
+  CreateCommitsAndTags:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Create commits and tags
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          for i in $(seq -f "%03g" 1 103);
+          do
+            now=$(date -u +%Y%m%d-%s)
+            curl -X POST \
+              -H "Accept: application/vnd.github.v3+json" \
+              -H "Authorization: token ${GITHUB_TOKEN}" \
+              https://api.github.com/repos/${GITHUB_REPOSITORY}/releases \
+              -d '{"tag_name": "dummy_tag_${i}", "name": "dummy_release_${i}_${now}", "body": "dummy release ${i}-${now}"}'
+          done

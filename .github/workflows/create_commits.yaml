@@ -1,26 +1,26 @@
 # touch: 0
-name: 'ci'
+name: 'Create Dummy Commits'
 
 on:
   push:
     branches: [ 'main' ]
     paths-includes:
-      - '.github/workflows/ci.yaml'
+      - '.github/workflows/create_commits.yaml'
   pull_request:
     types: [ 'closed' ]
     branches: [ 'main' ]
     paths-includes:
-      - '.github/workflows/ci.yaml'
+      - '.github/workflows/create_commits.yaml'
 
 jobs:
-  CreateCommits:
+  CreateCommitsAndTags:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Create commits
+      - name: Create commits and tags
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -29,23 +29,10 @@ jobs:
             now=$(date)
             echo "dummy commit ${i}: ${now}" > touch.txt
             git add touch.txt
+
             git commit -m "dummy commit ${i}: ${now}"
             git push origin main -f
-          done
 
-  CreateBranches:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Create Branches
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          for i in $(seq -f "%03g" 1 103);
-          do
-            git checkout -b dummy_branch_${i}
-            git push origin dummy_branch_${i} -f
+            git tag -a "dummy_tag_${i}" -m "dummy tag ${i}"
+            git push origin "dummy_tag_${i}"            
           done
