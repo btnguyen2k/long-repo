@@ -13,14 +13,14 @@ on:
       - '.github/workflows/create_releases.yaml'
 
 jobs:
-  CreateCommitsAndTags:
+  CreateReleases:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Create commits and tags
+      - name: Create releases
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
