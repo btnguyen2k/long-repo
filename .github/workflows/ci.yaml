@@ -13,6 +13,26 @@ on:
       - '.github/workflows/ci.yaml'
 
 jobs:
+  CreateCommits:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Create commits
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          for i in $(seq -f "%03g" 1 103);
+          do
+            now=$(date)
+            echo "dummy commit ${i}: ${now}" > touch.txt
+            git add touch.txt
+            git commit -m "dummy commit ${i}: ${now}"
+            git push origin main -f
+          done
+
   CreateBranches:
     runs-on: ubuntu-latest
     permissions:
