@@ -4,12 +4,12 @@ name: 'Create Dummy Branches'
 on:
   push:
     branches: [ 'main' ]
-    paths-includes:
+    paths:
       - '.github/workflows/create_branches.yaml'
   pull_request:
     types: [ 'closed' ]
     branches: [ 'main' ]
-    paths-includes:
+    paths:
       - '.github/workflows/create_branches.yaml'
 
 jobs:
