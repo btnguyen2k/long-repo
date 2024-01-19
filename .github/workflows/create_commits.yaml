@@ -26,13 +26,14 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           for i in $(seq -f "%03g" 1 103);
           do
-            now=$(date)
+            now=$(date -u +%Y%m%d-%s)
+            year=$(date -u +%Y)
             echo "dummy commit ${i}: ${now}" > touch.txt
             git add touch.txt
 
             git commit -m "dummy commit ${i}: ${now}"
             git push origin main -f
 
-            git tag -a "dummy_tag_${i}" -m "dummy tag ${i}"
-            git push origin "dummy_tag_${i}"            
+            git tag -a "v1.${year}.${i}" -m "dummy tag ${i}"
+            git push origin "v1.${year}.${i}"
           done
