@@ -31,5 +31,5 @@ jobs:
               -H "Accept: application/vnd.github.v3+json" \
               -H "Authorization: token ${GITHUB_TOKEN}" \
               https://api.github.com/repos/${GITHUB_REPOSITORY}/releases \
-              -d '{"tag_name": "dummy_tag_${i}", "name": "dummy_release_${i}_${now}", "body": "dummy release ${i}-${now}"}'
+              -d "{\"tag_name\": \"dummy_tag_${i}\", \"name\": \"dummy_release_${i}_${now}\", \"body\": \"dummy release ${i}-${now}\"}"
           done
