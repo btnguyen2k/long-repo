@@ -1,0 +1,29 @@
+# touch: 0
+name: 'ci'
+
+on:
+  push:
+    branches: [ 'main' ]
+    paths-includes:
+      - '.github/workflows/ci.yaml'
+  pull_request:
+    types: [ 'closed' ]
+    branches: [ 'main' ]
+    paths-includes:
+      - '.github/workflows/ci.yaml'
+
+jobs:
+  CreateBranches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Create Branches
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          for i in $(seq -f "%03g" 1 103);
+          do
+            git checkout -b dummy_branch_${i}
+            git push origin dummy_branch_${i} -f
+          done
