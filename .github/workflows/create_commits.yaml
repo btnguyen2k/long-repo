@@ -13,7 +13,7 @@ on:
       - '.github/workflows/create_commits.yaml'
 
 env:
-  VERSION: 'v2'
+  VERSION: 'x2'
 
 jobs:
   CreateCommitsAndTags:
