@@ -32,5 +32,5 @@ jobs:
               -H "Accept: application/vnd.github.v3+json" \
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
               https://api.github.com/repos/btnguyen2k/long-repo/releases \
-              -d "{\"tag_name\": \"v1.${year}.${i}\", \"name\": \"dummy_release_v1.${year}.${i}_${now}\", \"body\": \"dummy release v1.${year}.${i}-${now}\"}"
+              -d "{\"tag_name\": \"v1.${year}.${i}\", \"name\": \"my_release_v1.${year}.${i}_${now}\", \"body\": \"dummy release v1.${year}.${i}-${now}\"}"
           done
