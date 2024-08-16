@@ -12,6 +12,9 @@ on:
     paths:
       - '.github/workflows/create_commits.yaml'
 
+env:
+  VERSION: 'v2'
+
 jobs:
   CreateCommitsAndTags:
     runs-on: ubuntu-latest
@@ -34,6 +37,6 @@ jobs:
             git commit -m "dummy commit ${i}: ${now}"
             git push origin main -f
 
-            git tag -a "v1.${year}.${i}" -m "dummy tag ${i}"
-            git push origin "v1.${year}.${i}"
+            git tag -a "${{ env.VERSION }}.${year}.${i}" -m "dummy tag ${i}"
+            git push origin "${{ env.VERSION }}.${year}.${i}"
           done
